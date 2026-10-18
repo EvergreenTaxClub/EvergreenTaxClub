@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Federal & State Estate Tax Calculator</title>
+<style>
+:root{color-scheme:light;--ink:#18332e;--muted:#61736e;--green:#176951;--cream:#f5f5ef;--line:#dce3dc;--tax:#c06b46}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}header{background:#153b31;color:white;padding:32px max(24px,calc((100vw - 1260px)/2))}header small{text-transform:uppercase;letter-spacing:.18em;color:#c6d8b8}h1{font:normal 36px/1.15 Georgia,serif;margin:10px 0}header p{color:#d9e6df;margin:0}main{max-width:1308px;padding:28px 24px;margin:auto;display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px}.panel,.card{background:white;border:1px solid var(--line);border-radius:14px;padding:24px}.panel{align-self:start}h2{font-size:18px;margin:0 0 16px}h3{font-size:14px;margin:22px 0 12px}label{display:block;font-size:12px;font-weight:650;color:var(--muted);margin-bottom:14px}input,select{display:block;width:100%;font:inherit;font-size:15px;color:var(--ink);padding:10px 11px;border:1px solid #bbc9bf;border-radius:7px;background:white;margin-top:5px}input:focus,select:focus,button:focus-visible{outline:3px solid #c5decc;outline-offset:2px}input:disabled{background:#edf1ed;color:#7d8781}.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}details{border-top:1px solid var(--line);padding-top:14px}summary{cursor:pointer;font-size:13px;font-weight:650;margin-bottom:14px}button{cursor:pointer;font:inherit;border:1px solid #b8c9bd;background:white;border-radius:7px;padding:9px 14px;color:var(--ink)}button.primary{background:var(--green);color:white;border-color:var(--green)}button:disabled{opacity:.5;cursor:default}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.results{display:flex;flex-direction:column;gap:20px}.heading{display:flex;justify-content:space-between;align-items:start;gap:14px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.horizon{font:normal 30px Georgia,serif;margin:4px 0}.sub,.note{font-size:12px;color:var(--muted)}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.metric{border-left:3px solid var(--line);padding-left:13px}.metric strong{display:block;font-size:clamp(17px,1.7vw,25px);font-variant-numeric:tabular-nums;margin-top:6px}.metric.tax{border-color:var(--tax)}.metric.heirs{border-color:var(--green)}.metric span{font-size:12px;color:var(--muted)}.bar{height:24px;display:flex;border-radius:7px;overflow:hidden;background:#edf1ed}.bar .tax{background:var(--tax)}.bar .heirs{background:var(--green)}.legend{display:flex;justify-content:space-between;gap:12px;font-size:12px;margin:8px 0 0}.legend b{font-weight:600}svg{display:block;width:100%;height:auto;margin-top:14px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}th,td{padding:11px 9px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}th{font-weight:600;color:var(--muted)}th:first-child,td:first-child{text-align:left}caption{text-align:left;color:var(--muted);font-size:12px;padding-bottom:10px}.assumptions p{font-size:12px;color:var(--muted);margin:10px 0}.assumptions a{color:var(--green)}#error{background:#fff0e8;color:#933b1c;padding:14px;border-radius:8px;margin-bottom:16px}#error:empty{display:none}.invalid .calculated{display:none}.print-only{display:none}footer{max-width:1260px;margin:0 auto;padding:0 24px 24px;color:var(--muted);font-size:12px}@media(max-width:960px){main{grid-template-columns:280px minmax(0,1fr)}.metrics{grid-template-columns:1fr}.metric strong{font-size:25px}}@media(max-width:700px){main{display:block;padding:16px}.panel{margin-bottom:16px}.card{padding:18px}.metrics{grid-template-columns:1fr}header{padding:24px}h1{font-size:30px}}@media print{@page{size:landscape;margin:13mm}body{background:white;font-size:11px}header{background:white;color:var(--ink);padding:0 0 14px;border-bottom:1px solid var(--line)}header small,header p{color:var(--muted)}h1{font-size:26px}main{display:block;padding:16px 0}.panel,.no-print,footer{display:none!important}.card{padding:16px;border-radius:0;break-inside:avoid}.results{gap:14px}.metrics{grid-template-columns:repeat(3,1fr)}.metric strong{font-size:22px}.print-only{display:block}.bar,svg{-webkit-print-color-adjust:exact;print-color-adjust:exact}#annualCard{break-before:page}#annualCard th,#annualCard td{padding:5px}thead{display:table-header-group}.table-wrap{overflow:visible}}
+.bar .state{background:#6889a5}.metric.state{border-color:#6889a5}.legend{flex-wrap:wrap}.tax-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.tax-metrics .metric:first-child{grid-column:1/-1}.tax-metrics strong{font-size:clamp(18px,2vw,27px)}@media(max-width:600px){.tax-metrics{grid-template-columns:1fr}.tax-metrics .metric:first-child{grid-column:auto}}@media print{.tax-metrics{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><small>Client planning tools</small><h1>Federal &amp; State Estate Tax</h1><p>Estimate federal and state estate taxes, and the estate remaining for heirs.</p></header>
+<main>
+<form id="inputs" class="panel" autocomplete="off">
+<h2>Client assumptions</h2>
+<label>Client / household name (optional)<input id="client" type="text" placeholder="Client illustration" maxlength="100"></label>
+<div class="pair"><label>Wife’s current age<input id="wife" type="number" value="54" min="0" max="120" step="1" required></label><label>Husband’s current age<input id="husband" type="number" value="74" min="0" max="120" step="1" required></label></div>
+<label>Starting year<input id="year" type="number" value="2026" min="2026" max="2200" step="1" required></label>
+<label>Projection horizon<select id="mode"><option value="age">Until wife reaches target age</option><option value="years">Fixed number of years</option></select></label>
+<div class="pair"><label>Wife’s target age<input id="target" type="number" value="100" min="0" max="150" step="1" required></label><label>Years of growth<input id="years" type="number" value="46" min="0" max="120" step="1" required disabled></label></div>
+<label>Starting estate (USD)<input id="estate" type="number" value="30000000" min="0" max="1000000000000" step="any" required></label>
+<label>Annual estate growth (%)<input id="growth" type="number" value="5" min="-99" max="30" step="any" required></label>
+<h3>State estate tax</h3>
+<label>State / District of Columbia<select id="state"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA" selected>California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District of Columbia</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select></label>
+<label>Assumed annual inflation for indexed states (%)<input id="indexedInflation" type="number" value="2" min="0" max="20" step="any" required></label>
+<label>Selected state projection<select id="stateMode"><option value="policy">Follow current indexing policy</option><option value="custom">Custom inflation scenario</option></select></label>
+<label>Custom annual exemption growth (%)<input id="stateInflation" type="number" value="2" min="0" max="20" step="any" required disabled></label>
+<p class="note">2% is an editable planning assumption, not an official forecast. Current-policy mode holds fixed exemptions flat. Custom growth applies only to the selected state.</p>
+<details><summary>Federal tax assumptions</summary>
+<label>Starting exclusion per spouse (USD)<input id="exclusion" type="number" value="15000000" min="0" max="1000000000" step="any" required></label>
+<div class="pair"><label>Exclusion inflation (%)<input id="inflation" type="number" value="2" min="0" max="20" step="any" required></label><label>Federal tax rate (%)<input id="taxRate" type="number" value="40" min="0" max="100" step="any" required></label></div>
+<p class="note">Both federal exclusions grow to the endpoint under the original simplified model. Federal estate tax now deducts the estimated state estate tax from its tax base.</p>
+</details>
+<div class="actions"><button type="reset">Reset defaults</button></div>
+<p class="note">Runs entirely in this file. Client inputs are not uploaded or saved; reopening starts with defaults.</p>
+</form>
+<section id="results" class="results" aria-label="Projection results">
+<div id="error" role="alert"></div>
+<div class="card calculated">
+<div class="heading"><div><div class="eyebrow" id="clientTitle">Client illustration</div><h2 class="horizon" id="horizon"></h2><div class="sub" id="ageSummary"></div></div><button id="print" class="primary no-print" type="button">Print / Save PDF</button></div>
+<p class="print-only" id="printInputs"></p>
+<div class="metrics tax-metrics"><div class="metric"><span>Projected estate</span><strong id="estateResult"></strong></div><div class="metric tax"><span>Federal estate tax</span><strong id="taxResult"></strong></div><div class="metric state"><span>State estate tax</span><strong id="stateTaxResult"></strong></div><div class="metric"><span>Total estate tax</span><strong id="totalTaxResult"></strong></div><div class="metric heirs"><span>Remaining for heirs</span><strong id="heirsResult"></strong></div></div>
+<div class="bar" role="img" id="allocation"><div class="tax" id="taxBar"></div><div class="state" id="stateBar"></div><div class="heirs" id="heirsBar"></div></div><div class="legend"><b id="taxPercent"></b><b id="statePercent"></b><b id="heirsPercent"></b></div>
+<p class="note" id="exclusionSummary"></p><p class="note" id="stateTaxMethod"></p><p class="note" id="inheritanceNote"></p>
+<h3>Growth over time</h3><svg id="chart" viewBox="0 0 760 240" role="img" aria-label="Projected estate and remaining estate over time"></svg><p class="note">Gray: projected estate · Green: remaining after estimated federal and state estate tax at each illustrated year.</p>
+</div>
+<div class="card calculated" id="stateCard">
+<div class="eyebrow">State reference checked October 18, 2026</div><h2 id="stateTitle"></h2>
+<div class="metrics"><div class="metric"><span>Current 2026 exemption / threshold</span><strong id="stateCurrent"></strong></div><div class="metric"><span id="stateProjectedLabel">Projected exemption</span><strong id="stateProjected"></strong></div><div class="metric"><span>Annual exemption growth used</span><strong id="stateRate"></strong></div></div>
+<p id="statePolicy"></p><p id="stateNotes" class="note"></p><p id="stateExposure" class="note"></p>
+
+<p class="note"><a id="stateSource" target="_blank" rel="noopener noreferrer">Exemption source</a> · <a id="stateTaxSource" target="_blank" rel="noopener noreferrer">Tax schedule source</a> · <strong>Exemptions shown for one estate, not doubled for a couple.</strong></p>
+<p class="note"><strong>Resident-estate illustration:</strong> assumes all assets are subject to the selected state and no state spousal portability, prior gifts, special deductions, or credits. Inheritance taxes are excluded. Future tax rates and bracket widths are held at their current values.</p>
+</div>
+<div class="card calculated"><h2>Four-scenario comparison</h2><div class="table-wrap"><table><caption>Same ages, horizon, and tax assumptions; preset estate values and growth rates.</caption><thead><tr><th>Starting estate / growth</th><th>Projected estate</th><th>Federal tax</th><th>State tax</th><th>Total tax</th><th>For heirs</th></tr></thead><tbody id="comparison"></tbody></table></div></div>
+<div class="card calculated" id="annualCard"><div class="heading"><h2>Year-by-year projection</h2><button id="csv" type="button" class="no-print">Download CSV</button></div><details id="annualDetails"><summary>View annual values</summary><div class="table-wrap"><table><thead><tr><th>Year</th><th>Wife age</th><th>Husband age*</th><th>Estate</th><th>Combined exclusion</th><th>Federal tax</th><th>State tax</th><th>Total tax</th><th>For heirs</th></tr></thead><tbody id="annual"></tbody></table></div></details><p class="note">*Ages are calendar progression only, not an assumption that both spouses survive to each year. Annual tax figures are separate endpoint illustrations, not taxes deducted each year.</p></div>
+<div class="card calculated"><h2>All 50 states + District of Columbia</h2><p class="note" id="stateTableNote"></p><details><summary>View current exemptions, inflation treatment, and projections</summary><div class="table-wrap"><table><thead><tr><th>State</th><th>2026 exemption / threshold</th><th>Indexing policy</th><th>Assumed growth</th><th>Projected exemption</th><th>Inheritance tax?</th><th>Source</th></tr></thead><tbody id="stateTable"></tbody></table></div></details></div>
+<div class="card assumptions"><h2>How to read this illustration</h2><p>State tax uses one estate at the survivor’s projected death. All property is assumed to be taxable in the selected state; the starting estate is treated as net of ordinary deductions before death taxes. No marital/charitable deductions, prior gifts, state DSUE, out-of-state apportionment, business/farm relief, inheritance-tax offsets, or other special credits are modeled. This is a planning estimate, not a completed tax return.</p><p>For future years, the chosen inflation rate changes the state exemption only. Rates, tax caps, and bracket widths are held constant. For credit-based Massachusetts and Rhode Island, the credit is modeled to match the projected exemption; New York retains its exclusion phaseout. D.C. retains nominal bracket thresholds. Custom inflation represents hypothetical law changes for fixed-exemption states. Washington uses the schedule effective July 1, 2026, including for the year-end 2026 starting point. The deduction for state estate taxes follows <a href="https://www.irs.gov/instructions/i706" target="_blank" rel="noopener noreferrer">IRS Form 706 guidance</a>.</p><p>State projections use the published 2026 exemption × (1 + assumed growth)^(endpoint year − 2026), rounded to whole dollars. The base date stays 2026 even if you change the estate starting year. Fixed thresholds stay constant in current-policy mode; indexed thresholds use the editable inflation assumption. This is a scenario, not a prediction of CPI, statutory rounding, or future law. No estate tax is shown as “Not applicable,” never as a zero-dollar exemption.</p><p>Sources are embedded beside each state. The <a href="https://taxfoundation.org/data/all/state/estate-inheritance-taxes/" target="_blank" rel="noopener noreferrer">Tax Foundation October 2026 survey</a> supports the nationwide tax coverage and indexing classification; state agency sources supply the estate-tax thresholds. Snapshot is not automatically updated when this file is reopened.</p><p id="method"></p><p>This model follows the supplied estate-tax reports: compound the estate annually, round the endpoint estate to whole dollars, grow each spouse’s exclusion with assumed inflation, round each exclusion down to the nearest $10,000, and combine the two. Tax amounts are rounded to whole dollars. State estate tax is computed from the selected state schedule. Federal tax = selected federal rate × max(0, estate − estimated state estate tax − combined federal exclusion). This assumes the state estate tax qualifies for the federal deduction. Total tax is the sum of the two, not their combined headline rates. Inheritance tax is excluded.</p><p><strong>Spousal exclusion limitation:</strong> growing both exclusions through the endpoint is a simplified comparison assumption. Actual portability depends on the first death, unused exclusion, and a valid election; a deceased spouse’s unused exclusion does not keep receiving inflation adjustments. Prior gifts, spending, contributions, fees, investment taxes, deductions, and estate-planning structures are not modeled.</p><p>The horizon is user-selected, not a life-expectancy estimate. Returns, inflation, and future law can differ. The default $15 million per-spouse exclusion is for 2026; changing the start year does not automatically update tax assumptions. Use this as an illustration, not a tax return or individualized tax determination.</p><p>Reference: <a href="https://www.irs.gov/instructions/i706" target="_blank" rel="noopener noreferrer">IRS Form 706 instructions</a>. No internet connection is needed to run the calculator; the reference link opens online.</p></div>
+</section>
+</main><footer>Local estate tax calculator · USD · State-law snapshot: October 18, 2026 · Federal + state estate-tax illustration.</footer>
+<script>
+'use strict';
+const STATES={"AL": {"name": "Alabama", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "AK": {"name": "Alaska", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "AZ": {"name": "Arizona", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "AR": {"name": "Arkansas", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "CA": {"name": "California", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "CO": {"name": "Colorado", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "CT": {"name": "Connecticut", "base": 15000000, "indexed": true, "url": "https://portal.ct.gov/DRS/Individuals/Individual-Income-Tax-Portal/Estate-and-Gift-Taxes/Tax-Information", "note": "Linked to the federal exclusion. No automatic doubling for spouses in this state comparison.", "inheritance": false}, "DE": {"name": "Delaware", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "DC": {"name": "District of Columbia", "base": 4988400, "indexed": true, "url": "https://cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2026_D-76_v1.0_final.pdf", "note": "2026 exclusion; future statutory inflation adjustments can differ from this projection.", "inheritance": false}, "FL": {"name": "Florida", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "GA": {"name": "Georgia", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "HI": {"name": "Hawaii", "base": 5490000, "indexed": false, "url": "https://files.hawaii.gov/tax/forms/2025/m6_i.pdf", "note": "State spousal portability may be available; not included in this single-estate threshold.", "inheritance": false}, "ID": {"name": "Idaho", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "IL": {"name": "Illinois", "base": 4000000, "indexed": false, "url": "https://www.illinoisattorneygeneral.gov/estate-taxes/", "note": "An exclusion threshold, not a simple deduction from the estate; use the state calculator for actual tax.", "inheritance": false}, "IN": {"name": "Indiana", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "IA": {"name": "Iowa", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "KS": {"name": "Kansas", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "KY": {"name": "Kentucky", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No estate tax, but inheritance tax can apply depending on beneficiaries and transfers. No single estate exemption describes that tax.", "inheritance": true}, "LA": {"name": "Louisiana", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "ME": {"name": "Maine", "base": 7160000, "indexed": true, "url": "https://www.maine.gov/revenue/taxes/income-estate-tax/estate-tax-706me", "note": "Annually adjusted exclusion; projected amounts are rounded to dollars, not the statutory rounding formula.", "inheritance": false}, "MD": {"name": "Maryland", "base": 5000000, "indexed": false, "url": "https://services.marylandcomptroller.gov/taxes/en/estate-inheritance-fiduciary-tax-faqs?id=kb_article_view&sysparm_article=KB0010072", "note": "Both estate and inheritance taxes apply. State spousal portability may be available; not included here.", "inheritance": true}, "MA": {"name": "Massachusetts", "base": 2000000, "indexed": false, "url": "https://www.mass.gov/info-details/estate-tax-guide", "note": "The $2 million threshold is implemented through state rules and a tax credit; it is not a simple estate deduction.", "inheritance": false}, "MI": {"name": "Michigan", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "MN": {"name": "Minnesota", "base": 3000000, "indexed": false, "url": "https://www.revenue.state.mn.us/estate-tax", "note": "Special gift addbacks and qualifying property provisions are not modeled.", "inheritance": false}, "MS": {"name": "Mississippi", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "MO": {"name": "Missouri", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "MT": {"name": "Montana", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "NE": {"name": "Nebraska", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No estate tax, but inheritance tax can apply depending on beneficiaries and transfers. No single estate exemption describes that tax.", "inheritance": true}, "NV": {"name": "Nevada", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "NH": {"name": "New Hampshire", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "NJ": {"name": "New Jersey", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No estate tax, but inheritance tax can apply depending on beneficiaries and transfers. No single estate exemption describes that tax.", "inheritance": true}, "NM": {"name": "New Mexico", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "NY": {"name": "New York", "base": 7350000, "indexed": true, "url": "https://www.tax.ny.gov/pit/estate/etidx.htm", "note": "Exclusion benefit phases out between 100% and 105% of the threshold and disappears above 105% (the estate-tax cliff).", "inheritance": false}, "NC": {"name": "North Carolina", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "ND": {"name": "North Dakota", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "OH": {"name": "Ohio", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "OK": {"name": "Oklahoma", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "OR": {"name": "Oregon", "base": 1000000, "indexed": false, "url": "https://www.oregon.gov/dor/programs/businesses/pages/estate.aspx", "note": "Fixed $1 million threshold under the current framework.", "inheritance": false}, "PA": {"name": "Pennsylvania", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No estate tax, but inheritance tax can apply depending on beneficiaries and transfers. No single estate exemption describes that tax.", "inheritance": true}, "RI": {"name": "Rhode Island", "base": 1838056, "indexed": true, "url": "https://tax.ri.gov/tax-sections/estate-tax", "note": "This is the effective threshold associated with the state estate-tax credit, not a simple estate deduction.", "inheritance": false}, "SC": {"name": "South Carolina", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "SD": {"name": "South Dakota", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "TN": {"name": "Tennessee", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "TX": {"name": "Texas", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "UT": {"name": "Utah", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "VT": {"name": "Vermont", "base": 5000000, "indexed": false, "url": "https://legislature.vermont.gov/statutes/section/32/190/07444", "note": "Fixed threshold; certain recent gifts may affect filing and tax.", "inheritance": false}, "VA": {"name": "Virginia", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "WA": {"name": "Washington", "base": 3000000, "indexed": false, "url": "https://dor.wa.gov/taxes-rates/other-taxes/estate-tax", "note": "Applies from July 1, 2026. January-June 2026 used $3,076,000. DOR says the current $3 million exclusion is not set to increase because of an expired CPI reference.", "inheritance": false}, "WV": {"name": "West Virginia", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "WI": {"name": "Wisconsin", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}, "WY": {"name": "Wyoming", "base": null, "indexed": false, "url": "https://taxfoundation.org/data/all/state/estate-inheritance-taxes/", "note": "No separate state estate tax under the current framework.", "inheritance": false}};
+// State estate-tax schedules, current as of October 18, 2026.
+// Assumes a resident estate, all property in the selected state, no taxable gifts,
+// no special deductions/credits, and no state DSUE. Amounts are dollars.
+function marginalTax(amount, bands) {
+  let tax=0;
+  for(let i=0;i<bands.length;i++){
+    const [floor,rate]=bands[i],ceiling=i+1<bands.length?bands[i+1][0]:Infinity;
+    tax+=Math.max(0,Math.min(amount,ceiling)-floor)*rate;
+  }
+  return tax;
+}
+function legacyCredit(estate){
+  return marginalTax(Math.max(0,estate-60000),[
+    [40000,.008],[90000,.016],[140000,.024],[240000,.032],[440000,.04],
+    [640000,.048],[840000,.056],[1040000,.064],[1540000,.072],[2040000,.08],
+    [2540000,.088],[3040000,.096],[3540000,.104],[4040000,.112],
+    [5040000,.12],[6040000,.128],[7040000,.136],[8040000,.144],
+    [9040000,.152],[10040000,.16]]);
+}
+function nyTentative(estate){return marginalTax(estate,[
+ [0,.0306],[500000,.05],[1000000,.055],[1500000,.065],[2100000,.08],
+ [2600000,.088],[3100000,.096],[3600000,.104],[4100000,.112],
+ [5100000,.12],[6100000,.128],[7100000,.136],[8100000,.144],
+ [9100000,.152],[10100000,.16]]);}
+function stateEstateTax(code,estate,exemption){
+  if(exemption===null||estate<=exemption)return 0;
+  const excess=estate-exemption;
+  let tax;
+  switch(code){
+    case 'WA':tax=marginalTax(excess,[[0,.10],[1e6,.14],[2e6,.15],[3e6,.16],[4e6,.18],[6e6,.19],[7e6,.195],[9e6,.20]]);break;
+    case 'HI':tax=marginalTax(excess,[[0,.10],[1e6,.11],[2e6,.12],[3e6,.13],[4e6,.14],[5e6,.157],[10e6,.20]]);break;
+    case 'ME':tax=marginalTax(excess,[[0,.08],[3e6,.10],[6e6,.12]]);break;
+    case 'MN':tax=marginalTax(excess,[[0,.13],[7.1e6,.136],[8.1e6,.144],[9.1e6,.152],[10.1e6,.16]]);break;
+    case 'OR':tax=marginalTax(excess,[[0,.10],[.5e6,.1025],[1.5e6,.105],[2.5e6,.11],[3.5e6,.115],[4.5e6,.12],[5.5e6,.13],[6.5e6,.14],[7.5e6,.15],[8.5e6,.16]]);break;
+    case 'VT':tax=excess*.16;break;
+    case 'CT':tax=Math.min(15e6,excess*.12);break;
+    case 'MD':tax=Math.min(excess*.16,legacyCredit(estate));break;
+    case 'MA':tax=Math.max(0,legacyCredit(estate)-legacyCredit(exemption));break;
+    case 'RI':tax=Math.max(0,legacyCredit(estate)-(87940+legacyCredit(exemption)-legacyCredit(1838056)));break;
+    case 'DC':{
+      const bands=[[0,.112],[5e6,.12],[6e6,.128],[7e6,.136],[8e6,.144],[9e6,.152],[10e6,.16]];
+      tax=Math.max(0,marginalTax(estate,bands)-marginalTax(exemption,bands));break;
+    }
+    case 'NY':{
+      const creditBase=estate>=1.05*exemption?0:exemption*(1-(estate-exemption)/(.05*exemption));
+      tax=Math.max(0,nyTentative(estate)-nyTentative(Math.max(0,creditBase)));break;
+    }
+    case 'IL':{
+      // Solve the interrelated state-death-tax deduction and federal-credit limit.
+      let lo=0,hi=estate;
+      for(let i=0;i<100;i++){
+        const mid=(lo+hi)/2,net=estate-mid;
+        const result=Math.min(legacyCredit(net),Math.max(0,net-exemption)*.4);
+        if(mid<result)lo=mid;else hi=mid;
+      }
+      tax=(lo+hi)/2;break;
+    }
+    default:throw new Error('State estate-tax schedule is unavailable.');
+  }
+  return Math.round(Math.max(0,tax));
+}
+const STATE_TAX_METHODS={
+ WA:'Graduated 10%–20% rates on the estate above the exclusion, using rules effective July 1, 2026.',
+ HI:'Graduated 10%–20% rates above the exclusion. No inherited state spousal exclusion is assumed.',
+ ME:'8%, 10%, and 12% brackets above the exclusion.',
+ MN:'13%–16% brackets on the Minnesota taxable estate after subtracting the exclusion.',
+ OR:'10%–16% graduated schedule above the exclusion.',
+ VT:'16% of the estate above the exclusion.',
+ CT:'12% above the exclusion, capped at $15 million; assumes no prior Connecticut gift tax.',
+ MD:'Lesser of 16% above the exclusion and the legacy state death-tax credit. No state DSUE or inheritance-tax offset assumed.',
+ MA:'Legacy state death-tax credit schedule less the credit associated with the exemption ($99,600 at $2 million).',
+ RI:'Legacy state death-tax credit schedule less the 2026 $87,940 credit. Future credits are modeled to match the projected threshold.',
+ NY:'New York graduated schedule and exclusion-credit phaseout between 100% and 105% of the projected exclusion.',
+ DC:'11.2%–16% marginal schedule above the exclusion; nominal bracket thresholds held constant.',
+ IL:'Interrelated state tax deduction solved numerically using the legacy credit schedule and the 40% excess-over-exclusion limit.'
+};
+const STATE_TAX_SOURCES={
+ WA:'https://lawfilesext.leg.wa.gov/biennium/2025-26/Htm/Bill%20Reports/Senate/6347.E%20SBR%20FBR%2026.htm',
+ HI:'https://files.hawaii.gov/tax/forms/2025/m6ins.pdf',
+ ME:'https://www.maine.gov/revenue/taxes/income-estate-tax/estate-tax-706me',
+ MN:'https://www.revisor.mn.gov/statutes/cite/291.03',
+ OR:'https://www.oregon.gov/dor/forms/FormsPubs/form-or-706-inst_104-001-1_2025.pdf',
+ VT:'https://legislature.vermont.gov/statutes/section/32/190/07442a',
+ CT:'https://portal.ct.gov/DRS/Individuals/Individual-Income-Tax-Portal/Estate-and-Gift-Taxes/Tax-Information',
+ MD:'https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/forms/2025/met-1.pdf',
+ MA:'https://www.mass.gov/info-details/estate-tax-guide',
+ RI:'https://tax.ri.gov/sites/g/files/xkgbur541/files/2026-01/RI-706_w.pdf',
+ NY:'https://www.tax.ny.gov/pdf/current_forms/et/et706_fill_in.pdf',
+ DC:'https://cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2026_D-76_v1.0_final.pdf',
+ IL:'https://illinoisattorneygeneral.gov/estate-taxes/2013-2025-estate-calculator'
+};
+
+// Pure calculation function, also used by the verification script.
+function project(p, years, estate=p.estate, growth=p.growth) {
+  const value=Math.round(estate*Math.pow(1+growth/100,years));
+  const exclusion=Math.floor(p.exclusion*Math.pow(1+p.inflation/100,years)/10000)*20000;
+  const stateExemption=p.state?stateProjection(STATES[p.state],p.year+years,stateRate(p)):null;
+  const stateTax=p.state?stateEstateTax(p.state,value,stateExemption):0;
+  const tax=Math.round(Math.max(0,value-stateTax-exclusion)*p.taxRate/100);
+  const totalTax=tax+stateTax;
+  if(![value,exclusion,tax,stateTax,totalTax].every(Number.isSafeInteger)) throw new Error('The result exceeds the supported dollar range. Reduce the estate, growth, inflation, or duration.');
+  return {value,exclusion,tax,stateTax,totalTax,stateExemption,heirs:value-totalTax};
+}
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
+let current=null,annualRows=[];
+function readInputs(){
+  const p={};
+  for(const id of ['wife','husband','year','target','years','estate','growth','exclusion','inflation','taxRate','indexedInflation','stateInflation']){
+    const el=$(id);if(el.disabled)continue;
+    if(el.value.trim()===''||!el.checkValidity())throw new Error('Please enter a valid '+el.parentElement.firstChild.textContent.trim().toLowerCase()+'.');
+    p[id]=Number(el.value);
+  }
+  p.years=$('mode').value==='age'?p.target-p.wife:p.years;
+  if(p.years<0||p.years>120)throw new Error('Choose a horizon from 0 to 120 years. The target age cannot be below the wife’s current age.');
+  p.state=$('state').value;p.stateMode=$('stateMode').value;
+  return p;
+}
+function cellRow(values){const tr=document.createElement('tr');for(const v of values){const td=document.createElement('td');td.textContent=v;tr.appendChild(td);}return tr;}
+function drawChart(rows,p){
+  const max=Math.max(1,...rows.map(r=>r.value));
+  const x=i=>65+(p.years?i/p.years:0)*675,y=v=>195-v/max*165;
+  const path=key=>rows.map((r,i)=>(i?'L':'M')+x(i).toFixed(2)+','+y(r[key]).toFixed(2)).join(' ');
+  const short=n=>n>=1e12?'$'+(n/1e12).toFixed(1)+'T':n>=1e9?'$'+(n/1e9).toFixed(1)+'B':n>=1e6?'$'+(n/1e6).toFixed(1)+'M':money(n);
+  let svg='';for(let i=0;i<4;i++){const val=max*i/3,yy=y(val);svg+=`<line x1="65" y1="${yy}" x2="740" y2="${yy}" stroke="#e2e8e1"/><text x="55" y="${yy+4}" text-anchor="end" font-size="11" fill="#61736e">${short(val)}</text>`;}
+  svg+=`<path d="${path('value')}" fill="none" stroke="#a1b3aa" stroke-width="3"/><path d="${path('heirs')}" fill="none" stroke="#176951" stroke-width="3"/><circle cx="${x(p.years)}" cy="${y(rows.at(-1).heirs)}" r="4" fill="#176951"/><text x="65" y="222" font-size="12" fill="#61736e">${p.year}</text>`;
+  if(p.years)svg+=`<text x="740" y="222" text-anchor="end" font-size="12" fill="#61736e">${p.year+p.years}</text>`;
+  $('chart').innerHTML=svg;
+}
+function update(){
+ try{
+  const p=readInputs(),r=project(p,p.years);
+  const comparisons=[[30000000,5],[30000000,8],[50000000,5],[50000000,8]].map(([v,g])=>({v,g,...project(p,p.years,v,g)}));
+  const rows=Array.from({length:p.years+1},(_,n)=>({n,...project(p,n)}));
+  current=p;annualRows=rows;
+  if($('mode').value==='age')$('years').value=p.years;
+  $('error').textContent='';$('results').classList.remove('invalid');
+  $('clientTitle').textContent=$('client').value.trim()||'Client illustration';
+  $('horizon').textContent=`${p.year} – ${p.year+p.years} · ${p.years} years`;
+  $('ageSummary').textContent=`Wife: ${p.wife} → ${p.wife+p.years} · Husband starts at ${p.husband} · ${STATES[p.state].name}`;
+  $('estateResult').textContent=money(r.value);$('taxResult').textContent=money(r.tax);$('stateTaxResult').textContent=money(r.stateTax);$('totalTaxResult').textContent=money(r.totalTax);$('heirsResult').textContent=money(r.heirs);
+  const pct=r.value?r.tax/r.value*100:0,statePct=r.value?r.stateTax/r.value*100:0,heirsPct=r.value?100-pct-statePct:0;
+  $('taxBar').style.width=pct+'%';$('stateBar').style.width=statePct+'%';$('statePercent').textContent=`State tax · ${statePct.toFixed(2)}%`;$('heirsBar').style.width=heirsPct+'%';
+  $('taxPercent').textContent=`Federal tax · ${pct.toFixed(2)}%`;$('heirsPercent').textContent=`After estate taxes · ${heirsPct.toFixed(2)}%`;
+  $('allocation').setAttribute('aria-label',`Federal tax ${pct.toFixed(2)} percent, state estate tax ${statePct.toFixed(2)} percent, heirs ${heirsPct.toFixed(2)} percent`);
+  $('exclusionSummary').textContent=`Illustrative combined exclusion: ${money(r.exclusion)} · State exclusion: ${r.stateExemption===null?'not applicable':money(r.stateExemption)}`;
+  const desc=`Starting estate ${money(p.estate)}; annual growth ${p.growth}%; initial exclusion ${money(p.exclusion)} per spouse; exclusion inflation ${p.inflation}%; federal rate ${p.taxRate}%. Ages are at year-end ${p.year}.`;
+  $('printInputs').textContent=desc;$('method').textContent=desc;
+  $('comparison').replaceChildren(...comparisons.map(a=>cellRow([money(a.v)+' / '+a.g+'%',money(a.value),money(a.tax),money(a.stateTax),money(a.totalTax),money(a.heirs)])));
+  $('annual').replaceChildren(...rows.map(a=>cellRow([p.year+a.n,p.wife+a.n,p.husband+a.n,money(a.value),money(a.exclusion),money(a.tax),money(a.stateTax),money(a.totalTax),money(a.heirs)])));
+  drawChart(rows,p);renderStates(p,r);
+ }catch(e){current=null;annualRows=[];$('error').textContent=e.message;$('results').classList.add('invalid');}
+}
+$('inputs').addEventListener('input',update);
+$('inputs').addEventListener('submit',e=>e.preventDefault());
+$('mode').addEventListener('change',()=>{$('target').disabled=$('mode').value==='years';$('years').disabled=$('mode').value==='age';update();});
+$('inputs').addEventListener('reset',()=>setTimeout(()=>{$('target').disabled=false;$('years').disabled=true;syncStateControls();update();},0));
+$('print').addEventListener('click',()=>{if(current)window.print();});
+$('csv').addEventListener('click',()=>{
+ if(!current)return;const p=current;
+ const rows=[['Year','Wife age','Husband calendar age','Estate USD','Combined exclusion USD','Federal tax USD','State estate tax USD','Remaining for heirs USD','Growth percent','Exclusion inflation percent','Federal tax percent','Total estate tax USD','State','Projected state exemption USD','State exemption growth percent'],...annualRows.map(r=>[p.year+r.n,p.wife+r.n,p.husband+r.n,r.value,r.exclusion,r.tax,r.stateTax,r.heirs,p.growth,p.inflation,p.taxRate,r.totalTax,STATES[p.state].name,stateProjection(STATES[p.state],p.year+r.n,stateRate(p))??"Not applicable",STATES[p.state].base===null?"Not applicable":stateRate(p)])];
+ const blob=new Blob(['\uFEFF'+rows.map(r=>r.join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=`estate-state-projection-${p.state}-${p.year}-${p.year+p.years}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+function stateRate(p,code=p.state){
+ const s=STATES[code];return s.base===null?0:(code===p.state&&p.stateMode==='custom'?p.stateInflation:(s.indexed?p.indexedInflation:0));
+}
+function stateProjection(s,endYear,rate){
+ if(s.base===null)return null;
+ const amount=Math.round(s.base*Math.pow(1+rate/100,endYear-2026));
+ if(!Number.isSafeInteger(amount))throw new Error('State exemption projection exceeds the supported range. Reduce inflation or the horizon.');
+ return amount;
+}
+function syncStateControls(){
+ const noEstate=STATES[$('state').value].base===null;
+ $('stateMode').disabled=noEstate;
+ $('stateInflation').disabled=noEstate||$('stateMode').value!=='custom';
+}
+function renderStates(p,r){
+ const s=STATES[p.state],end=p.year+p.years,rate=stateRate(p),amount=stateProjection(s,end,rate);
+ $('stateTitle').textContent=s.name+' · '+(s.base===null?'No estate tax':(s.inheritance?'Estate + inheritance tax':'Estate tax'));
+ $('stateCurrent').textContent=s.base===null?'Not applicable':money(s.base);
+ $('stateProjectedLabel').textContent='Projected exemption in '+end;
+ $('stateProjected').textContent=amount===null?'Not applicable':money(amount);
+ $('stateRate').textContent=s.base===null?'Not applicable':rate+'%';
+ $('statePolicy').textContent=s.base===null?'No estate exemption to inflate.':(p.stateMode==='custom'?'Custom scenario overrides the current indexing policy.':s.indexed?'Inflation-indexed / federal-linked under current policy; future inflation is assumed.':'Fixed exemption under current policy; no automatic annual growth assumed.');
+ $('stateNotes').textContent=s.note+(s.inheritance?' Inheritance tax is not calculated here.':'');
+
+ $('stateExposure').textContent=amount===null?'No separate state estate tax is included for this state.':`Projected estate is ${money(Math.abs(r.value-amount))} ${r.value>amount?'above':'at or below'} the illustrated state threshold. This difference is not a state taxable estate or a tax bill.`;
+ $('stateSource').href=s.url;
+ $('stateTaxMethod').textContent=(STATE_TAX_METHODS[p.state]||'No separate state estate tax.')+' Federal tax includes a deduction for the estimated state estate tax.';
+ $('inheritanceNote').textContent=s.inheritance?'This state also has inheritance tax. It is not included; liability depends on the beneficiaries and transfers.':'';
+ $('stateTaxSource').href=STATE_TAX_SOURCES[p.state]||s.url;
+ $('stateTableNote').textContent=`Projection year: ${end}. Indexed states use ${p.indexedInflation}%; fixed states use 0%. A custom rate, if selected, changes only ${s.name}. Thresholds are for one estate; tax credits, cliffs, portability, and deductions can change actual tax.`;
+ $('stateTable').replaceChildren(...Object.entries(STATES).map(([code,v])=>{
+   const growth=stateRate(p,code),future=stateProjection(v,end,growth);
+   const tr=cellRow([v.name,v.base===null?'No estate tax':money(v.base),v.base===null?'Not applicable':v.indexed?'Indexed / linked':'Fixed',v.base===null?'—':growth+'%',future===null?'Not applicable':money(future),v.inheritance?'Yes':'No']);
+   const td=document.createElement('td'),a=document.createElement('a');a.textContent='Source';a.href=v.url;a.target='_blank';a.rel='noopener noreferrer';td.appendChild(a);tr.appendChild(td);return tr;
+ }));
+ $('printInputs').textContent+=` State: ${s.name}; state threshold: ${s.base===null?'not applicable':money(s.base)} (2026); state exemption growth used: ${s.base===null?'not applicable':rate+'%'}. Estimated state estate tax is included; inheritance tax is excluded.`;
+}
+$('state').addEventListener('change',()=>{syncStateControls();update();});
+$('stateMode').addEventListener('change',()=>{syncStateControls();update();});
+syncStateControls();
+
+update();
+</script>
+</body></html>
