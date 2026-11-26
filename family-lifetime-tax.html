@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lifetime taxable income, total taxes to pay</title><style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#182c39;background:#f2f5f7;font-size:16px}*{box-sizing:border-box}body{margin:0}header{background:#102e3c;color:white;padding:32px max(24px,calc((100vw - 1440px)/2)) 36px}header small{letter-spacing:3px;color:#80daca}h1{font-size:clamp(28px,4vw,42px);font-weight:600;margin:12px 0}header p{color:#c2d4dc;max-width:780px;line-height:1.6;margin:0}.badge{display:inline-block;border:1px solid #50707e;border-radius:30px;padding:7px 12px;font-size:13px;margin-top:20px}main{max-width:1488px;margin:auto;padding:24px;display:grid;grid-template-columns:340px 1fr;gap:24px}aside,.panel,.stat{background:white;border:1px solid #dce4e8;border-radius:14px}aside{padding:22px;align-self:start}h2{font-size:20px;margin:0 0 16px}h3{font-size:15px;margin:24px 0 12px;color:#246b6b}label{display:block;font-size:14px;font-weight:600;margin:12px 0 6px}input[type=number],input[data-money]{width:100%;padding:10px 12px;font:inherit;border:1px solid #bdcdd5;border-radius:7px;color:#142f3c;background:#fbfcfd}input:focus{outline:2px solid #008b7b;outline-offset:2px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:13px;color:#617783;line-height:1.5}button{cursor:pointer;border:1px solid #bfd0d6;background:white;color:#174653;padding:10px 14px;border-radius:7px;font:inherit;font-size:14px;font-weight:600}button:hover{background:#e9f4f2}.primary{background:#006f64;color:white;border-color:#006f64;width:100%;margin-top:20px}.primary:hover{background:#00594f}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.stat{padding:22px}.stat.featured{background:#006f64;color:white}.stat small{font-size:14px}.stat strong{display:block;font-size:clamp(25px,3vw,36px);margin:9px 0}.stat p{font-size:13px;margin:0;opacity:.8}.panel{padding:24px;margin-top:20px}.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.topline h2{margin:0}.legend{font-size:13px;display:flex;gap:18px;margin:16px 0}.legend span:before{content:'';display:inline-block;width:10px;height:10px;background:var(--c);border-radius:3px;margin-right:6px}svg{width:100%;height:auto;display:block}svg text{font-size:12px;fill:#647986}.scroll{overflow:auto;max-height:510px;margin-top:18px}table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}th,td{padding:12px;text-align:right;white-space:nowrap;border-bottom:1px solid #e4eaed}th{position:sticky;top:0;background:#edf3f5;color:#4b626e;font-weight:600}td:first-child,th:first-child{text-align:left}tr:hover td{background:#f0f9f7}summary{cursor:pointer;font-weight:600}details p,details li{font-size:14px;line-height:1.65;color:#4e6571}a{color:#006f64}#error{color:#a52828;font-size:14px}#notice{color:#89600e;background:#fff6df;padding:12px;border-radius:7px;font-size:14px;line-height:1.5}footer{max-width:1440px;margin:0 auto;padding:0 24px 30px;color:#647986;font-size:13px}@media(max-width:950px){main{grid-template-columns:1fr}aside form{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}aside form>h3,aside form>.hint,aside form>button,aside form>#error{grid-column:1/-1}}@media(max-width:550px){main{padding:12px}.stats{grid-template-columns:1fr}aside form{display:block}.panel{padding:16px}header{padding:24px}button{padding:10px}}@media print{aside,button{display:none}main{display:block}.scroll{max-height:none;overflow:visible}.panel,.stat{break-inside:avoid}header{background:white;color:black}header p{color:black}}
+/* Compact header and width-safe layout */
+header{padding:18px max(24px,calc((100vw - 1440px)/2)) 20px}header small{font-size:11px;letter-spacing:2px}h1{font-size:clamp(23px,2.4vw,30px);margin:7px 0 5px}header p{font-size:14px;max-width:none;line-height:1.45}.badge{margin-top:10px;font-size:12px;padding:4px 10px}main{grid-template-columns:300px minmax(0,1fr);gap:20px;padding-top:20px}section,aside,.panel,.stateBox{min-width:0}aside{padding:18px}input[type=number],input[data-money],select{max-width:100%;min-width:0}select{font:inherit;font-size:14px;padding:10px 30px 10px 10px;border:1px solid #bdcdd5;border-radius:7px;background-color:#fbfcfd;color:#183c49}#state{width:100%}.state-summary{background:#eaf3f5;border:1px solid #cbdde3;border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:14px;line-height:1.5}.state-summary p{margin:5px 0}.state-summary details{margin-top:8px}.state-summary summary{font-size:13px}.stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.stat{padding:16px;min-width:0}.stat strong{font-size:clamp(21px,2.25vw,31px);overflow-wrap:anywhere}.stat small{font-size:14px}.panel{padding:18px;margin-top:16px}.legend{flex-wrap:wrap;gap:10px 16px}.scroll{overflow-y:auto;overflow-x:hidden;max-height:540px;margin-top:12px}table{table-layout:fixed;font-size:14px;width:100%}th,td{padding:10px 7px;white-space:normal;overflow-wrap:anywhere}th{font-size:14px;vertical-align:bottom}th:first-child{width:95px}.year-toggle{padding:2px 0;border:0;background:none;color:#006f64;text-align:left;font-size:14px}.year-toggle small{display:block;color:#617783;font-size:12px;font-weight:400;margin-top:4px}.expand-symbol:after{content:'+';margin-left:4px}.year-toggle[aria-expanded=true] .expand-symbol:after{content:'−'}[hidden]{display:none!important}.year-details{text-align:left;background:#f3f8f9;padding:16px}.year-details dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0}.year-details dt{font-size:13px;color:#617783}.year-details dd{margin:4px 0 0;font-size:15px;font-weight:600}#notice{margin-bottom:14px}.stateBox{grid-column:1/-1}@media(max-width:1150px){main{grid-template-columns:270px minmax(0,1fr);gap:16px;padding:16px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:14px}th,td{padding:9px 5px}}@media(max-width:950px){main{grid-template-columns:minmax(0,1fr)}aside form{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){header{padding:16px}header p{font-size:14px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:12px}.stat strong{font-size:22px}aside form{display:block}th,td{font-size:12px;padding:8px 3px}th:first-child{width:68px}.year-toggle{font-size:13px}.year-details dl{grid-template-columns:repeat(2,minmax(0,1fr))}.topline{align-items:flex-start}}@media print{.state-summary details{display:block}.scroll{overflow:visible;max-height:none}.year-toggle{display:block}thead{display:table-header-group}th{position:static}.year-details{display:none}}
+aside h2{margin-bottom:6px}aside h3{margin:16px 0 7px}aside label{margin:8px 0 4px}aside .hint{margin:6px 0;font-size:12px;line-height:1.4}aside input[type=number],aside input[data-money],aside select{padding:8px 10px}.withdrawal-options{margin-top:12px;border-top:1px solid #dce4e8;padding-top:12px;grid-column:1/-1}.withdrawal-options summary{font-size:14px;color:#246b6b}.withdrawal-options .pair{grid-template-columns:90px minmax(0,1fr)}.form-actions{display:flex;gap:8px;margin-top:16px;grid-column:1/-1}.form-actions .primary{margin:0;flex:1}.form-actions #reset{margin:0}aside form>h3{grid-column:1/-1}
+</style></head><body><header><small>FAMILY FINANCIAL PLANNING</small><h1>Lifetime taxable income, total taxes to pay</h1><p>Project family income, retirement withdrawals, and federal + state taxes.</p><div class="badge">Married filing jointly · 2026 tax-law baseline · USD</div></header><main><aside><h2>Your assumptions</h2><form id="form">
+<h3>Family & residence</h3>
+<div class="pair"><div><label for="age">Your age</label><input id="age" type="number" value="55" min="18" max="100" step="1" required></div><div><label for="spouse">Spouse age</label><input id="spouse" type="number" value="55" min="18" max="100" step="1" required></div></div>
+<div><label for="end">Your final age</label><input id="end" type="number" value="100" min="18" max="120" step="1" required></div>
+<div><label for="state">State</label><select id="state"><option value="NONE">Federal only — choose a state</option></select></div>
+<p class="hint">Year-end ages in 2026. Joint filing throughout.</p>
+<h3>Annual income</h3>
+<div><label for="ordinary">Ordinary income ($)</label><input id="ordinary" type="text" inputmode="decimal" data-money value="150000" required></div>
+<div><label for="gains">Long-term gains ($)</label><input id="gains" type="text" inputmode="decimal" data-money value="30000" required></div>
+<div class="pair"><div><label for="growth">Income growth (%)</label><input id="growth" type="number" value="5" min="-20" max="20" step="0.1" required></div><div><label for="gainGrowth">Gains growth (%)</label><input id="gainGrowth" type="number" value="5" min="-20" max="20" step="0.1" required></div></div>
+<p class="hint">Growth compounds yearly. Exclude retirement withdrawals.</p>
+<h3>Pre-tax IRA / 401(k)</h3>
+<div><label for="balance">Your balance ($)</label><input id="balance" type="text" inputmode="decimal" data-money value="1000000" required></div>
+<div><label for="spouseBalance">Spouse balance ($)</label><input id="spouseBalance" type="text" inputmode="decimal" data-money value="500000" required></div>
+<div><label for="returns">Annual return (%)</label><input id="returns" type="number" value="5" min="-20" max="20" step="0.1" required></div>
+<details class="withdrawal-options"><summary>Optional annual withdrawals</summary>
+<div class="pair"><div><label for="withdrawalAge">Your start age</label><input id="withdrawalAge" type="number" value="60" min="60" max="120" step="1" required></div><div><label for="withdrawalAmount">Your annual $</label><input id="withdrawalAmount" type="text" inputmode="decimal" data-money value="0" required></div></div>
+<div class="pair"><div><label for="spouseWithdrawalAge">Spouse start age</label><input id="spouseWithdrawalAge" type="number" value="60" min="60" max="120" step="1" required></div><div><label for="spouseWithdrawalAmount">Spouse annual $</label><input id="spouseWithdrawalAmount" type="text" inputmode="decimal" data-money value="0" required></div></div>
+<p class="hint">Age 60+. Fixed yearly amounts; $0 = RMD only. Automatically topped up to RMD, up to the available balance.</p>
+</details>
+<h3>Tax assumptions</h3>
+<div><label for="inflation">Annual inflation (%)</label><input id="inflation" type="number" value="2.5" min="0" max="10" step="0.1" required></div>
+<label><input type="checkbox" id="stateIndex" checked> Inflate state thresholds</label>
+<label><input type="checkbox" id="niit" checked> Include 3.8% NIIT</label>
+<p class="hint">Inflation adjusts tax brackets and deductions.</p>
+<div class="form-actions"><button class="primary" type="submit">Update</button><button type="button" id="reset">Reset</button></div><p id="error" role="alert"></p></form></aside><section><div class="state-summary" id="stateSummary" aria-live="polite"></div><div id="notice" hidden></div><div id="withdrawalWarning" class="state-summary" role="status" hidden></div><div class="stats" aria-live="polite"><div class="stat featured"><small>Total projected income tax</small><strong id="total"></strong><p id="horizon"></p></div><div class="stat"><small>Federal lifetime tax</small><strong id="federalTotal"></strong><p>Ordinary tax + gains tax + NIIT</p></div><div class="stat"><small>State lifetime tax · estimate</small><strong id="stateTotal"></strong><p id="stateTotalNote">Choose a state to include state tax</p></div><div class="stat"><small>Tax in 2026 dollars</small><strong id="present"></strong><p>Discounted using your inflation assumption</p></div><div class="stat"><small>Lifetime effective tax rate</small><strong id="effective"></strong><p>Total tax ÷ total modeled income, including withdrawals</p></div><div class="stat"><small>Final pre-tax account balance</small><strong id="ending"></strong><p>Combined balance after final-year withdrawals</p></div></div><div class="panel"><div class="topline"><h2>Your tax timeline</h2><select id="chartMode" aria-label="Chart view"><option value="annual">Annual tax</option><option value="cumulative">Cumulative tax</option><option value="balance">Retirement balance & withdrawals</option></select></div><div id="legend" class="legend"></div><div id="chart"></div><p class="hint" id="rmdNote"></p></div><div class="panel"><div class="topline"><h2>Year-by-year projection</h2><div><button id="csv">Download CSV</button> <button onclick="window.print()">Print</button></div></div><p class="hint">Nominal dollars, rounded for display. Select a year to expand its income, deduction, and RMD breakdown.</p><div class="scroll"><table><thead><tr><th>Year / ages</th><th>Federal tax</th><th>State tax<br><small>Estimate</small></th><th>Combined tax</th><th>Cumulative tax</th><th>End pre-tax balance</th></tr></thead><tbody id="rows"></tbody></table></div></div><div class="panel"><details><summary>How the projection works & sources</summary><p>The 2026 MFJ ordinary brackets are 10%, 12%, 22%, 24%, 32%, 35%, and 37%, with upper thresholds of $24,800, $100,800, $211,400, $403,550, $512,450, and $768,700. Long-term gains stack above taxable ordinary income, with 0% through $98,900, 15% through $613,700, then 20%.</p><p>The standard deduction starts at $32,200 plus $1,650 for each spouse aged 65+. These thresholds and deductions grow at your chosen inflation rate without IRS rounding. The temporary senior deduction is included through 2028: up to $6,000 per eligible spouse, reduced by 6% of joint MAGI above $150,000 per spouse. Modeled gross income is used as MAGI.</p><p>NIIT is 3.8% of the smaller of gains or MAGI above $250,000 (not inflation indexed). This assumes the ordinary income field is not net investment income. The gains field is treated as realized capital gains for state calculations; do not combine qualified dividends with gains when projecting state tax. collectibles and real-estate recapture are not supported.</p><h3>State-tax estimate</h3><p>State schedules use the Tax Foundation 2026 MFJ compilation with selected official updates linked below. Some reference thresholds are carried over from 2025; this is a simplified planning model, not a complete current state return. Federal standard deductions remain unchanged by your state choice. State calculations use their own deduction/exemption assumptions. Most states tax gains as ordinary income; selected exclusions and surtaxes are modeled. Nonrefundable state credits are generally omitted.</p><p>Retirement-withdrawal exemptions are modeled for Illinois, Iowa, Mississippi, and Pennsylvania; limited retirement-withdrawal exclusions are included for Georgia and New York. Other retirement, Social Security, capital-gain, or income-specific relief is not automatic unless stated in the selected state's notes. The selected state's notes identify material omissions.</p><p>State rates are held constant after 2026, except Washington's enacted 2028 income tax. Scheduled future rate cuts are not forecast. State-threshold inflation is enabled by default and scales modeled dollar thresholds, deductions, and exclusions together. You can disable it. This is a scenario assumption, not state-specific statutory indexing. No local taxes, multistate sourcing, moving midyear, state tax credits, or federal itemized SALT deduction are included.</p><ul><li><a href="https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/" target="_blank" rel="noopener">State MFJ reference schedules and footnotes</a></li><li><a href="https://taxfoundation.org/data/all/state/state-capital-gains-tax-rates/" target="_blank" rel="noopener">State capital-gains treatment</a></li><li><a href="https://dor.wa.gov/taxes-rates/income-tax" target="_blank" rel="noopener">Washington's income tax starting in 2028</a></li></ul><div id="stateSources"></div><p>The projection begins in 2026 and includes the final year in full. Enter prior December 31 account balances, or use current balances as a planning approximation. Ordinary income is before standard deductions but after pre-tax payroll deductions; gains are realized profits, not sale proceeds. Income growth and investment returns compound annually. Federal brackets and deductions grow from the 2026 baseline using the inflation assumption, which also discounts taxes to 2026 dollars. Withdrawals use whole-year ages of 60 or later, beyond the usual age-59½ early-distribution threshold; the model assumes your plan permits the withdrawals. <a href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-significant-ages-for-retirement-plan-participants" target="_blank" rel="noopener">IRS distribution ages</a>.</p><p>Each RMD uses the prior year-end balance divided by the IRS Uniform Lifetime factor. Starting ages follow birth cohort: 70½ before July 1949 (already past at this model's start), 72 for the remaining 1949–1950 cohorts, 73 for 1951–1959, and 75 for 1960 onward. Withdrawals occur at year-end after account growth, without first-year deferral. Optional withdrawals begin at each owner’s selected age (60 or later). The annual amount stays fixed in nominal dollars; enter $0 for RMD-only withdrawals. Actual withdrawals equal the greater of the elected amount and the RMD, capped at the balance after annual growth. Only actual withdrawals are taxed and deducted from balances. Excess withdrawals do not prepay future RMDs. No contributions, conversions, or still-working exception are modeled. All distributions are assumed fully taxable federally. Table II for a sole-beneficiary spouse more than 10 years younger is not modeled.</p><p>Income continues growing throughout the horizon; retirement does not automatically stop wages. Both spouses remain MFJ through the final year. This is a lifetime income-tax illustration, not an estate or survivor model: no estate tax, inherited-account withdrawals, local tax, payroll tax, AMT, credits, itemized deductions, QBI deduction, or automatic Social Security taxation. Remaining pre-tax assets may create taxes after this horizon. Future laws and actual returns can differ.</p><ul><li><a href="https://www.irs.gov/irb/2025-45_IRB" target="_blank" rel="noopener">IRS: 2026 tax brackets, deductions, and capital-gain thresholds</a></li><li><a href="https://www.irs.gov/publications/p590b" target="_blank" rel="noopener">IRS Publication 590-B: distribution rules and Uniform Lifetime Table</a></li><li><a href="https://www.irs.gov/individuals/net-investment-income-tax" target="_blank" rel="noopener">IRS: net investment income tax</a></li><li><a href="https://www.irs.gov/newsroom/check-your-eligibility-for-the-new-enhanced-deduction-for-seniors" target="_blank" rel="noopener">IRS: enhanced senior deduction</a></li></ul></details></div></section></main><footer>Planning estimate, not a tax return. All CSS, charts, and calculations are included in this file. No external libraries or data transmission.</footer><script>
+'use strict';
+// State planning module. Dollar thresholds are a reference snapshot, not a full tax-return engine.
+const stateDefinitions = [
+['AL','Alabama',8500,3000,[[0,2],[1000,4],[6000,5]]],
+['AK','Alaska',0,0,[]],['AZ','Arizona',16700,0,[[0,2.5]]],
+['AR','Arkansas',4940,0,[[0,2],[4700,3.7]]],
+['CA','California',11800,0,[[0,1],[22912,2],[54314,4],[85722,6],[118996,8],[150394,9.3],[768218,10.3],[921854,11.3],[1536426,12.3]]],
+['CO','Colorado',32200,0,[[0,4.4]]],
+['CT','Connecticut',0,24000,[[0,2],[20000,4.5],[100000,5.5],[200000,6],[400000,6.5],[500000,6.9],[1000000,6.99]]],
+['DE','Delaware',6500,0,[[2000,2.2],[5000,3.9],[10000,4.8],[20000,5.2],[25000,5.55],[60000,6.6]]],
+['DC','District of Columbia',32200,0,[[0,4],[10000,6],[40000,6.5],[60000,8.5],[250000,9.25],[500000,9.75],[1000000,10.75]]],
+['FL','Florida',0,0,[]],['GA','Georgia',30000,0,[[0,4.99]]],
+['HI','Hawaii',8800,2288,[[0,1.4],[19200,3.2],[28800,5.5],[38400,6.4],[48000,6.8],[72000,7.2],[96000,7.6],[250000,7.9],[350000,8.25],[450000,9],[550000,10],[650000,11]]],
+['ID','Idaho',32200,0,[[9622,5.3]]],['IL','Illinois',0,5850,[[0,4.95]]],['IN','Indiana',0,2000,[[0,2.95]]],['IA','Iowa',32200,0,[[0,3.8]]],
+['KS','Kansas',8240,18320,[[0,5.2],[46000,5.58]]],['KY','Kentucky',3360,0,[[0,3.5]]],['LA','Louisiana',25750,0,[[0,3]]],
+['ME','Maine',16700,10600,[[0,5.8],[54850,6.75],[129750,7.15]]],
+['MD','Maryland',6700,6400,[[0,2],[1000,3],[2000,4],[3000,4.75],[150000,5],[175000,5.25],[225000,5.5],[300000,5.75],[600000,6.25],[1200000,6.5]]],
+['MA','Massachusetts',0,8800,[[0,5],[1107750,9]]],['MI','Michigan',0,11800,[[0,4.25]]],
+['MN','Minnesota',30600,0,[[0,5.35],[48700,6.8],[193480,7.85],[337930,9.85]]],['MS','Mississippi',4600,12000,[[10000,4]]],
+['MO','Missouri',32200,0,[[1348,2],[2696,2.5],[4044,3],[5392,3.5],[6740,4],[8088,4.5],[9436,4.7]]],
+['MT','Montana',32200,0,[[0,4.7],[95000,5.65]]],['NE','Nebraska',17700,0,[[0,2.46],[8250,3.51],[49530,4.55]]],
+['NV','Nevada',0,0,[]],['NH','New Hampshire',0,0,[]],
+['NJ','New Jersey',0,2000,[[0,1.4],[20000,1.75],[50000,2.45],[70000,3.5],[80000,5.53],[150000,6.37],[500000,8.97],[1000000,10.75]]],
+['NM','New Mexico',32200,0,[[0,1.5],[8000,3.2],[25000,4.3],[50000,4.7],[100000,4.9],[315000,5.9]]],
+['NY','New York',16050,0,[[0,3.9],[17150,4.4],[23600,5.15],[27900,5.4],[161550,5.9],[323200,6.85],[2155350,9.65],[5000000,10.3],[25000000,10.9]]],
+['NC','North Carolina',25500,0,[[0,3.99]]],['ND','North Dakota',32200,0,[[80975,1.95],[298075,2.5]]],['OH','Ohio',0,4800,[[26050,2.75]]],
+['OK','Oklahoma',12700,2000,[[7500,2.5],[9800,3.5],[14400,4.5]]],['OR','Oregon',5820,0,[[0,4.75],[9100,6.75],[22800,8.75],[250000,9.9]]],
+['PA','Pennsylvania',0,0,[[0,3.07]]],['RI','Rhode Island',22400,10500,[[0,3.75],[82050,4.75],[186450,5.99]]],
+['SC','South Carolina',30000,0,[[0,1.99],[30000,5.21]]],['SD','South Dakota',0,0,[]],['TN','Tennessee',0,0,[]],['TX','Texas',0,0,[]],
+['UT','Utah',0,0,[[0,4.45]]],['VT','Vermont',15300,10600,[[0,3.35],[82500,6.6],[199450,7.6],[304000,8.75]]],
+['VA','Virginia',17500,1860,[[0,2],[3000,3],[5000,5],[17000,5.75]]],['WA','Washington',290000,0,[]],
+['WV','West Virginia',0,4000,[[0,2.11],[10000,2.81],[25000,3.16],[40000,4.22],[60000,4.58]]],
+['WI','Wisconsin',25840,1400,[[0,3.5],[20150,4.4],[69260,5.3],[443630,7.65]]],['WY','Wyoming',0,0,[]]
+];
+const stateNotes={
+AL:'Includes the joint standard-deduction phaseout and a deduction for modeled federal regular income tax. Pension exemptions are not automatically applied.',
+AZ:'Uses the $16,700 joint deduction in the early-2026 compilation; later conformity changes are not incorporated. Asset-specific capital-gain exclusions are not automatic.',
+AR:'Uses the 2026 low/high-income schedules and 50% capital-gain exclusion, capped at $10 million of gains before the exclusion. Transition bracket adjustment, exemptions and retirement exclusions are omitted.',
+CA:'Uses the FTB October 2026 brackets and $11,800 joint deduction, plus the 1% tax above $1 million of taxable income. Personal/senior credits and payroll SDI are excluded.',
+CO:'Retirement subtractions, high-income federal-deduction addbacks and temporary refunds are omitted.',
+CT:'Personal-exemption phaseout and rate recapture are included. Personal tax credits and income-dependent retirement exclusions are omitted.',
+DE:'Age-based retirement exclusions and personal credits are omitted.',
+GA:'Uses 4.99% and a $30,000 joint deduction. Includes retirement-withdrawal exclusions up to $35,000 per owner at 62–64 or $65,000 at 65+. Other income eligible for retirement exclusion is not automatically identified.',
+HI:'Caps tax on modeled net long-term gains at 7.25%. Employer-funded pension exemptions are omitted.',
+ID:'Uses the $9,622 zero-rate band in the reference compilation. Special gains deductions and pension relief are omitted.',
+IL:'Qualified 401(k)/IRA withdrawals are excluded. The $5,850 joint exemption is removed above $500,000 of state-adjusted income.',
+IA:'Qualified retirement withdrawals are excluded for owners aged 55+. Personal credits are omitted.',
+KY:'Uses one $3,360 deduction for a joint return. Separate-return savings and retirement-income exclusions are omitted.',
+ME:'Includes the 2% surcharge above $1.5 million of taxable income. Deduction conformity, deduction/exemption phaseouts and retirement relief are not fully modeled; reference deduction is $16,700.',
+MD:'Includes the 2% capital-gain surtax when federal AGI exceeds $350,000. County income tax, pension exclusions and special gains exemptions are omitted.',
+MA:'Uses the 2026 $1,107,750 surcharge threshold. Other deductions and pension/basis exclusions are omitted.',
+MI:'Retirement-income deductions can be substantial and are not automatic. This model does not identify pension or Social Security income within the ordinary-income field.',
+MN:'Includes standard-deduction phaseout and 1% tax on modeled investment gains above $1 million. Other investment income and retirement relief are omitted.',
+MS:'Qualified retirement withdrawals are excluded. Uses a single $10,000 zero-rate band; allocation between spouses and future rate cuts are not modeled.',
+MO:'Realized capital gains are excluded. Pension exclusions and the federal-tax deduction are omitted.',
+MT:'Applies separate 3% / 4.1% long-term capital-gain rates with gains stacked above ordinary taxable income. Additional age-based deductions are omitted.',
+NJ:'Retirement-income and age-based exemptions, property-tax deductions and contribution-basis adjustments are not automatic.',
+NM:'Includes the general $2,500 capital-gain exclusion. Special business-sale gains and retirement exclusions are omitted.',
+NY:'Includes up to $20,000 of retirement-withdrawal exclusion per owner aged 59½+. High-income tax-benefit recapture and NYC/Yonkers taxes are omitted, so the estimate can understate taxes.',
+ND:'Includes a 40% long-term capital-gain exclusion. Uses the reference compilation’s bracket thresholds; marriage credits are omitted.',
+OH:'Includes the $332 base tax above $26,050 and income-based personal exemptions. Municipal/school-district taxes and retirement credits are omitted.',
+OR:'Federal-tax subtraction, personal credits and Portland/Metro taxes are omitted.',
+PA:'Qualified retirement RMDs are excluded. Other ordinary income is treated as taxable; local earned-income tax and tax forgiveness are omitted.',
+RI:'Includes a linear approximation of the deduction/exemption phaseout; retirement relief is omitted.',
+SC:'Uses 2026 rates and the income-adjusted joint deduction. Includes the 44% long-term capital-gain exclusion and $15,000 deduction per spouse aged 65+. Under-65 retirement relief is omitted.',
+UT:'Uses 4.45%. Taxpayer and retirement credits are omitted, which can overstate tax.',
+VT:'Includes the 3%-of-AGI minimum above $150,000. Capital-gain and retirement exclusions are omitted.',
+VA:'Age deductions and spouse tax adjustment are omitted.',
+WA:'2026 capital-gain deduction: $290,000; 7% on the next $1 million, then 9.9%. Assumes all entered gains are WA-taxable investments (not exempt real estate or dividends). Includes the enacted 9.9% income tax above $1 million from 2028, net of credit for WA gains tax. Other adjustments are omitted.',
+WV:'Uses the retroactive 2026 reduced rates. Age-based income exclusions are omitted.',
+WI:'Includes the 30% long-term capital-gain exclusion and an approximate sliding standard deduction. Retirement relief is omitted.'
+};
+const stateSourceLinks={
+MA:['Massachusetts · 2026 rates','https://www.mass.gov/info-details/tax-rates'],
+CA:['California FTB · 2026 update','https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/2026/10.html'],
+GA:['Georgia · 2026 changes','https://www.ers.ga.gov/post/retirees-georgia-income-tax-rate-changes'],
+WA:['Washington · capital gains','https://dor.wa.gov/taxes-rates/other-taxes/capital-gains-tax/do-you-owe-capital-gains-tax'],
+SC:['South Carolina · 2026 rules','https://www.dor.sc.gov/sites/dor/files/policies/IL26-23.pdf'],
+AR:['Arkansas · 2026 rates','https://www.arkansasedc.com/why-arkansas/business-climate/tax-structure/personal-income-tax'],
+WV:['West Virginia · 2026 rates','https://tax.wv.gov/Individuals/Pages/PersonalIncomeTaxReductionBill.aspx'],
+UT:['Utah · 2026 rate','https://le.utah.gov/xcode/Title59/Chapter10/C59-10-S104_2026050620260506.html'],
+OH:['Ohio · 2026 schedule','https://tax.ohio.gov/individual/who-must-file/whats-new'],
+IL:['Illinois · retirement exclusion','https://tax.illinois.gov/research/publications/pubs/retirement-income.html'],
+IA:['Iowa · retirement exclusion','https://revenue.iowa.gov/taxes/tax-guidance/individual-income-tax/retirement-income-tax-guidance'],
+PA:['Pennsylvania · retirement treatment','https://www.pa.gov/agencies/revenue/forms-and-publications/pa-personal-income-tax-guide/gross-compensation'],
+MS:['Mississippi · income-tax FAQ','https://www.dor.ms.gov/individual/individual-income-tax-frequently-asked-questions'],
+MO:['Missouri · gains exclusion','https://dor.mo.gov/faq/taxation/individual/capital-gains-subtraction.html'],
+MT:['Montana · rates and gains','https://revenue.mt.gov/news/recent-news/HB-337'],
+NY:['New York · retirement income','https://www.tax.ny.gov/pit/file/information_for_seniors.htm'],
+ME:['Maine · 2026 rates and surcharge','https://www.maine.gov/revenue/sites/maine.gov.revenue/files/2026-05/ind_tax_rate_sched_2026_rev.pdf']
+};
+const STATES=Object.fromEntries(stateDefinitions.map(([code,name,deduction,exemption,brackets])=>[code,{code,name,deduction,exemption,brackets}]));
+function stateProgressive(income,brackets,f=1){return brackets.reduce((tax,[lower,rate],i)=>tax+Math.max(0,Math.min(income,(brackets[i+1]?.[0]??Infinity)*f)-lower*f)*rate/100,0)}
+function stateTaxFor(p,r){
+ const s=STATES[p.state];if(!s)return {stateTax:0,stateTaxable:0,stateExcluded:0,stateDeduction:0};
+ const f=p.stateIndex?(1+p.inflation/100)**(r.year-2026):1;
+ const withdrawal=r.withdrawal??r.rmd,spWithdrawal=r.spWithdrawal??r.spRmd;
+ let ordinary=r.ordinary+withdrawal+spWithdrawal,gains=r.gains;
+ if(!s.brackets.length&&s.code!=='WA')return {stateTax:0,stateTaxable:0,stateExcluded:r.gross,stateDeduction:0};
+ if(['IL','IA','MS','PA'].includes(s.code))ordinary-=withdrawal+spWithdrawal;
+ if(s.code==='NY')ordinary-=Math.min(withdrawal,20000*f)+Math.min(spWithdrawal,20000*f);
+ if(s.code==='GA')ordinary-=Math.min(withdrawal,(r.a>=65?65000:r.a>=62?35000:0)*f)+Math.min(spWithdrawal,(r.b>=65?65000:r.b>=62?35000:0)*f);
+ if(s.code==='WA'){
+  const taxableGains=Math.max(0,gains-290000*f),cgTax=.07*Math.min(taxableGains,1000000*f)+.099*Math.max(0,taxableGains-1000000*f);
+  const incomeTax=r.year>=2028?.099*Math.max(0,ordinary+gains-1000000*f):0;
+  return {stateTax:Math.max(cgTax,incomeTax),stateTaxable:taxableGains,stateExcluded:0,stateDeduction:290000*f};
+ }
+ if(s.code==='MO')gains=0;
+ if(s.code==='NM')gains=Math.max(0,gains-2500*f);
+ if(s.code==='AR')gains=.5*Math.min(gains,10000000*f);
+ if(s.code==='ND')gains*=.6;
+ if(s.code==='SC')gains*=.56;
+ if(s.code==='WI')gains*=.7;
+ const agi=ordinary+gains,referenceAGI=agi/f;let deduction=s.deduction*f,exemption=s.exemption*f;
+ if(s.code==='AL'){deduction=Math.max(5000,8500-175*Math.max(0,Math.ceil((referenceAGI-25999)/500)))*f;deduction+=r.ordinaryTax+r.gainsTax;}
+ if(s.code==='CT')exemption=Math.max(0,24000-1000*Math.max(0,Math.ceil((referenceAGI-48000)/1000)))*f;
+ if(s.code==='IL'&&referenceAGI>500000)exemption=0;
+ if(s.code==='MD'){
+  deduction=Math.min(6700*f,Math.max(3350*f,agi*.15));
+  exemption=(referenceAGI<=150000?6400:referenceAGI<=175000?3200:referenceAGI<=200000?1600:0)*f;
+ }
+ if(s.code==='MN')deduction-=Math.min(.8*deduction,.03*Math.max(0,Math.min(agi,337800*f)-244400*f)+.10*Math.max(0,agi-337800*f));
+ if(s.code==='OH')exemption=(referenceAGI<=40000?4800:referenceAGI<=80000?4300:referenceAGI<500000?3800:0)*f;
+ if(s.code==='RI'){const reduction=Math.max(0,Math.min(1,(referenceAGI-261000)/(290800-261000)));deduction*=1-reduction;exemption*=1-reduction;}
+ if(s.code==='SC'){
+  deduction=30000*f-Math.min(30000,Math.floor(30000*Math.max(0,r.gross/f-80000)/110000/10)*10)*f;
+  deduction+=15000*f*(Number(r.a>=65)+Number(r.b>=65));
+ }
+ if(s.code==='WI')deduction*=Math.max(0,Math.min(1,(159690-referenceAGI)/(159690-29039)));
+ const stateDeduction=deduction+exemption,taxable=Math.max(0,agi-stateDeduction);let tax=stateProgressive(taxable,s.brackets,f);
+ if(s.code==='AR'&&agi<=94700*f)tax=stateProgressive(taxable,[[5600,2],[11200,3],[16000,3.4],[26400,3.7]],f);
+ if(s.code==='CA')tax+=.01*Math.max(0,taxable-1000000*f);
+ if(s.code==='CT'){
+  tax+=.025*Math.min(taxable,20000*f,2000*f*Math.max(0,Math.ceil((referenceAGI-100500)/5000)));
+  tax+=Math.min(500,50*Math.max(0,Math.ceil((referenceAGI-210000)/10000)))*f;
+  tax+=Math.min(6300,Math.min(5400,180*Math.max(0,Math.ceil((referenceAGI-400000)/10000)))+100*Math.max(0,Math.ceil((referenceAGI-1000000)/10000)))*f;
+ }
+ if(s.code==='OH'&&taxable>26050*f)tax+=332*f;
+ if(s.code==='ME')tax+=.02*Math.max(0,taxable-1500000*f);
+ if(s.code==='MD'&&r.gross>350000*f)tax+=.02*gains;
+ if(s.code==='MN')tax+=.01*Math.max(0,gains-1000000*f);
+ if(s.code==='HI'||s.code==='MT'){
+  const taxableGains=Math.min(gains,taxable),taxableOrdinary=taxable-taxableGains;
+  if(s.code==='HI')tax=Math.min(tax,stateProgressive(taxableOrdinary,s.brackets,f)+.0725*taxableGains);
+  else {const lowerGains=Math.min(taxableGains,Math.max(0,95000*f-taxableOrdinary));tax=stateProgressive(taxableOrdinary,s.brackets,f)+lowerGains*.03+(taxableGains-lowerGains)*.041;}
+ }
+ if(s.code==='VT'&&r.gross>150000*f)tax=Math.max(tax,r.gross*.03);
+ return {stateTax:Math.max(0,tax),stateTaxable:taxable,stateExcluded:Math.max(0,r.gross-agi),stateDeduction};
+}
+
+const limits=[24800,100800,211400,403550,512450,768700,Infinity],rates=[.10,.12,.22,.24,.32,.35,.37];
+const divisors=[27.4,26.5,25.5,24.6,23.7,22.9,22,21.1,20.2,19.4,18.5,17.7,16.8,16,15.2,14.4,13.7,12.9,12.2,11.5,10.8,10.1,9.5,8.9,8.4,7.8,7.3,6.8,6.4,6,5.6,5.2,4.9,4.6,4.3,4.1,3.9,3.7,3.5,3.4,3.3,3.1,3,2.9,2.8,2.7,2.5,2.3,2];
+function startAge(birth){return birth>=1960?75:birth>=1951?73:birth>=1949?72:70.5}
+function progressive(x,f=1){let tax=0,lo=0;for(let i=0;i<limits.length;i++){const hi=limits[i]*f;tax+=Math.max(0,Math.min(x,hi)-lo)*rates[i];lo=hi;if(x<=hi)break}return tax}
+function taxFor(ordinary,gains,a,b,year,f,includeNiit){const gross=ordinary+gains,seniors=Number(a>=65)+Number(b>=65);const deduction=(32200+1650*seniors)*f+(year<=2028?seniors*Math.max(0,6000-.06*Math.max(0,gross-150000)):0);const taxable=Math.max(0,gross-deduction),cg=Math.min(gains,taxable),oi=taxable-cg;const zero=Math.min(cg,Math.max(0,98900*f-oi));const fifteen=Math.min(cg-zero,Math.max(0,613700*f-Math.max(oi,98900*f)));const ordinaryTax=progressive(oi,f),gainsTax=fifteen*.15+(cg-zero-fifteen)*.2,niit=includeNiit?.038*Math.min(gains,Math.max(0,gross-250000)):0;return{deduction,ordinaryTax,gainsTax,niit,tax:ordinaryTax+gainsTax+niit,gross}}
+function annualWithdrawal(balance,age,rmdAge,start,amount,returns){
+ const rmd=age>=rmdAge?balance/divisors[Math.min(120,age)-72]:0;
+ const requested=age>=Math.max(60,start??60)?Math.max(0,amount||0):0;
+ const available=Math.max(0,balance*(1+returns/100));
+ const withdrawal=Math.min(available,Math.max(requested,rmd));
+ return {rmd,requested,withdrawal,topUp:Math.min(withdrawal,Math.max(0,rmd-requested)),unfunded:Math.max(0,Math.max(requested,rmd)-available),ending:available-withdrawal};
+}
+function project(p){
+ let bal=p.balance,spbal=p.spouseBalance,cumulative=0;const data=[];
+ for(let t=0;t<=p.end-p.age;t++){
+  const year=2026+t,a=p.age+t,b=p.spouse+t,f=(1+p.inflation/100)**t;
+  const ordinary=p.ordinary*(1+p.growth/100)**t,gains=p.gains*(1+p.gainGrowth/100)**t;
+  const own=annualWithdrawal(bal,a,startAge(2026-p.age),p.withdrawalAge,p.withdrawalAmount,p.returns);
+  const spouse=annualWithdrawal(spbal,b,startAge(2026-p.spouse),p.spouseWithdrawalAge,p.spouseWithdrawalAmount,p.returns);
+  bal=own.ending;spbal=spouse.ending;
+  const rmd=own.rmd,spRmd=spouse.rmd,withdrawal=own.withdrawal,spWithdrawal=spouse.withdrawal;
+  const tx=taxFor(ordinary+withdrawal+spWithdrawal,gains,a,b,year,f,p.niit);
+  const st=stateTaxFor(p,{year,a,b,ordinary,gains,rmd,spRmd,withdrawal,spWithdrawal,...tx});
+  const tax=tx.tax+st.stateTax;cumulative+=tax;
+  data.push({year,a,b,ordinary,gains,rmd,spRmd,withdrawal,spWithdrawal,requested:own.requested,spRequested:spouse.requested,topUp:own.topUp,spTopUp:spouse.topUp,unfunded:own.unfunded+spouse.unfunded,...tx,...st,federalTax:tx.tax,tax,cumulative,balance:bal+spbal,present:tax/f});
+ }
+ return data;
+}
+const $=id=>document.getElementById(id),money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n),compact=n=>'$'+new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(n);let data=[];
+
+function validateMoney(el){
+ const raw=el.value.replaceAll(',','').trim();
+ const valid=/^\d+(?:\.\d*)?$/.test(raw)&&Number(raw)<=100000000;
+ el.setCustomValidity(valid?'':'Enter a dollar amount from 0 to 100,000,000.');
+ return valid;
+}
+function formatMoneyInputs(){
+ document.querySelectorAll('[data-money]').forEach(el=>{
+  if(validateMoney(el)){
+   const parts=el.value.replaceAll(',','').trim().split('.');
+   el.value=Number(parts[0]).toLocaleString('en-US')+(parts.length>1?'.'+parts[1]:'');
+  }
+ });
+}
+document.querySelectorAll('[data-money]').forEach(el=>{
+ el.addEventListener('focus',()=>{el.value=el.value.replaceAll(',','')});
+ el.addEventListener('input',()=>validateMoney(el));
+ el.addEventListener('blur',formatMoneyInputs);
+});
+
+function renderStateSummary(p){
+ const s=STATES[p.state];
+ $('stateTotalNote').textContent=s?s.name+' · simplified estimate':'State tax not included';
+ if(!s){$('stateSummary').innerHTML='<strong>Federal-only view</strong><p>Choose a state of residence to include estimated state taxes.</p>';return;}
+ const noTax=!s.brackets.length&&s.code!=='WA';
+ const source=stateSourceLinks[s.code]||['Reference schedule','https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/'];
+ const notes=stateNotes[s.code]||(noTax?'No individual income tax on the modeled income under this baseline. Other taxes still apply.':'Uses the reference MFJ brackets and basic deductions/exemptions. Special income exclusions and credits are omitted.');
+ $('stateSummary').innerHTML='<strong>'+s.name+' · '+(noTax?'no state income tax':'simplified state estimate')+'</strong><p>'+notes+'</p><details><summary>State assumptions & reference</summary><p>'+(noTax?'':('Reference joint deduction: '+money(s.deduction)+'. Basic exemptions: '+money(s.exemption)+'. Amounts may phase out; credits are not included. '))+'Full-year resident throughout; local taxes excluded. '+(p.stateIndex?'State dollar thresholds grow at '+p.inflation+'% annually.':'State thresholds are fixed in nominal dollars.')+' Some reference values predate later 2026 updates. <a href="'+source[1]+'" target="_blank" rel="noopener">'+source[0]+'</a></p></details>';
+}
+function renderYearRow(r,i){
+ const details=[['Ordinary income (excluding withdrawals)',r.ordinary],['Long-term capital gains',r.gains],['Your RMD minimum',r.rmd],['Spouse RMD minimum',r.spRmd],['Your elected withdrawal',r.requested],['Spouse elected withdrawal',r.spRequested],['Your actual withdrawal',r.withdrawal],['Spouse actual withdrawal',r.spWithdrawal],['Your RMD top-up',r.topUp],['Spouse RMD top-up',r.spTopUp],['Unfunded withdrawals',r.unfunded],['Federal deductions',r.deduction],['Federal ordinary tax',r.ordinaryTax],['Federal gains tax',r.gainsTax],['Federal NIIT',r.niit],['State income exclusions',r.stateExcluded],['State deductions / exemptions',r.stateDeduction],['State taxable base*',r.stateTaxable],['Total modeled income',r.gross]];
+ return '<tr><td><button class="year-toggle" data-year="'+i+'" aria-expanded="false" aria-controls="detail-'+i+'">'+r.year+' <span class="expand-symbol" aria-hidden="true"></span><small>Ages '+r.a+' / '+r.b+'</small></button></td>'+['federalTax','stateTax','tax','cumulative','balance'].map(k=>'<td>'+money(r[k])+'</td>').join('')+'</tr><tr id="detail-'+i+'" hidden><td colspan="6" class="year-details"><dl>'+details.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+money(value)+'</dd></div>').join('')+'</dl><p class="hint">*Washington shows its taxable capital-gains base here. Combined state tax also includes any modeled 2028+ income tax after the gains-tax credit.</p></td></tr>';
+}
+
+function render(){formatMoneyInputs();if(!$('form').checkValidity()){ $('form').reportValidity();return}const p={};document.querySelectorAll('input[type=number],input[data-money]').forEach(el=>p[el.id]=Number(el.value.replaceAll(',','')));p.niit=$('niit').checked;p.state=$('state').value||'NONE';p.stateIndex=$('stateIndex').checked;if(p.end<p.age){$('error').textContent='Final age must be at least your current age.';return}$('error').textContent='';data=project(p);const last=data.at(-1),sum=k=>data.reduce((s,r)=>s+r[k],0);$('total').textContent=money(last.cumulative);$('federalTotal').textContent=money(sum('federalTax'));$('stateTotal').textContent=money(sum('stateTax'));renderStateSummary(p);$('present').textContent=money(sum('present'));$('effective').textContent=(sum('gross')?100*last.cumulative/sum('gross'):0).toFixed(1)+'%';$('ending').textContent=money(last.balance);$('horizon').textContent=`2026–${last.year} · ${data.length} years · through your age ${last.a}`;$('notice').hidden=Math.abs(p.age-p.spouse)<=10;$('notice').textContent='Age gap exceeds 10 years. This model uses the Uniform Lifetime Table. If the younger spouse is the sole beneficiary, the older spouse’s RMD requires Table II and this projection will overstate that RMD.';$('withdrawalWarning').hidden=!data.some(r=>r.unfunded>.005);$('withdrawalWarning').textContent='Some elected withdrawals exceed available funds. Actual withdrawals are capped at the account balance; expand a year to see the shortfall.';$('rmdNote').textContent=`RMD starting age: you ${startAge(2026-p.age)}, spouse ${startAge(2026-p.spouse)}. Withdrawals include any RMD top-up and are added to ordinary income.`;$('rows').innerHTML=data.map((r,i)=>renderYearRow(r,i)).join('');draw()}
+function draw(){if(!data.length)return;const mode=$('chartMode').value,series=mode==='annual'?[['ordinaryTax','Ordinary tax','#147d79'],['gainsTax','Gains tax','#61b8a9'],['niit','NIIT','#e7ac54'],['stateTax','State tax estimate','#6377c7']]:mode==='cumulative'?[['cumulative','Cumulative tax','#147d79']]:[['balance','Pre-tax balance','#147d79'],['withdrawalTotal','Annual withdrawals','#d59635']];$('legend').innerHTML=series.map(s=>`<span style="--c:${s[2]}">${s[1]}</span>`).join('');const W=900,H=300,L=76,R=20,T=20,B=42,pw=W-L-R,ph=H-T-B;const val=(r,k)=>k==='withdrawalTotal'?r.withdrawal+r.spWithdrawal:r[k];const max=Math.max(1,...data.map(r=>mode==='annual'?r.tax:Math.max(...series.map(s=>val(r,s[0])))))*1.12;const y=v=>T+ph-v/max*ph,x=i=>L+(i+.5)*pw/data.length;let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${mode} projection chart"><title>${mode} projection. Full values are in the year-by-year table.</title>`;for(let i=0;i<=4;i++){const v=max*i/4;svg+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="#e0e8eb"/><text x="${L-10}" y="${y(v)+4}" text-anchor="end">${compact(v)}</text>`}if(mode==='annual'){data.forEach((r,i)=>{let base=0;series.forEach(s=>{svg+=`<rect x="${x(i)-pw/data.length*.36}" y="${y(base+r[s[0]])}" width="${pw/data.length*.72}" height="${r[s[0]]/max*ph}" fill="${s[2]}"><title>${r.year} · Age ${r.a} · ${s[1]}: ${money(r[s[0]])} · Total: ${money(r.tax)}</title></rect>`;base+=r[s[0]]})})}else series.forEach(s=>{svg+=`<polyline points="${data.map((r,i)=>x(i)+','+y(val(r,s[0]))).join(' ')}" fill="none" stroke="${s[2]}" stroke-width="3"/>`;data.forEach((r,i)=>svg+=`<circle cx="${x(i)}" cy="${y(val(r,s[0]))}" r="4" fill="${s[2]}"><title>${r.year} · ${s[1]}: ${money(val(r,s[0]))}</title></circle>`)});const stride=Math.max(1,Math.ceil(data.length/7));data.forEach((r,i)=>{if(i%stride===0||i===data.length-1)svg+=`<text x="${x(i)}" y="${H-18}" text-anchor="middle">${r.year}</text>`});$('chart').innerHTML=svg+'</svg>'}
+$('state').innerHTML='<option value="NONE">Federal only — choose a state</option>'+stateDefinitions.map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('');
+$('stateSources').innerHTML='<ul>'+Object.values(stateSourceLinks).map(([label,url])=>'<li><a href="'+url+'" target="_blank" rel="noopener">'+label+'</a></li>').join('')+'</ul>';
+$('rows').addEventListener('click',event=>{const button=event.target.closest('[data-year]');if(!button)return;const row=$('detail-'+button.dataset.year),open=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(open));row.hidden=!open;});
+$('form').addEventListener('submit',e=>{e.preventDefault();render()});$('form').addEventListener('change',render);$('chartMode').addEventListener('change',draw);$('reset').addEventListener('click',()=>{$('form').reset();render()});$('csv').addEventListener('click',()=>{const keys=['year','a','b','ordinary','gains','rmd','spRmd','requested','spRequested','withdrawal','spWithdrawal','topUp','spTopUp','unfunded','deduction','ordinaryTax','gainsTax','niit','federalTax','stateTax','tax','cumulative','balance','present','stateTaxable','stateExcluded','stateDeduction'];const csv=['State,'+(STATES[$('state').value]?.name||'Federal only')+'; Simplified planning estimate; state threshold inflation '+($('stateIndex').checked?'on':'off'),'Year,Your age,Spouse age,Ordinary income excluding withdrawals,Long-term gains,Your RMD minimum,Spouse RMD minimum,Your elected withdrawal,Spouse elected withdrawal,Your actual withdrawal,Spouse actual withdrawal,Your RMD top-up,Spouse RMD top-up,Unfunded withdrawals,Deductions,Ordinary tax,Gains tax,NIIT,Total federal tax,Estimated state tax,Combined tax,Cumulative combined tax,End pre-tax balance,Combined tax in 2026 dollars,State taxable base (WA capital gains base),State income exclusions,State deductions and exemptions',...data.map(r=>keys.map(k=>Number.isInteger(r[k])?r[k]:r[k].toFixed(2)).join(','))].join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'})),a=document.createElement('a');a.href=url;a.download='family-lifetime-tax-projection.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});render();
+</script></body></html>
+
